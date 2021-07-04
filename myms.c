@@ -12,9 +12,51 @@ typedef struct Area{
 void setStates(int *tate, int *yoko, int *bomb);  //ステージの大きさと爆弾数を設定
 void generateMap(struct Area **map, int tate, int yoko, int bomb);
 
-void disp(Area **arr,int x, int y){
+void disp(Area **map,int tate, int yoko){
   // disp aroundBom
-  for(int i=0)
+  printf("y\\x|");
+  for(int i=1;i<=yoko;i++) printf("%2d ",i-1);
+  printf("\n---+");
+  for(int i=1;i<=yoko;i++) printf("---");
+  printf("\n");
+  for(int i=1;i<=yoko;i++){
+    printf("%2d |",i-1);
+    for(int j=1;j<=tate;j++)  printf("%2d ",map[i][j].aroundBom);
+    printf("\n");
+  }
+  printf("\n");
+
+  // disp Bom
+  printf("y\\x|");
+  for(int i=1;i<=yoko;i++) printf("%2d ",i-1);
+  printf("\n---+");
+  for(int i=1;i<=yoko;i++) printf("---");
+  printf("\n");
+  for(int i=1;i<=yoko;i++){
+    printf("%2d |",i-1);
+    for(int j=1;j<=tate;j++){
+      if(map[i][j].setBom){
+        printf("%2d ",1);
+      }else{
+        printf("%2d ",0);
+      }
+    }
+    printf("\n");
+  }
+  printf("\n");
+  
+  // disp GameMap
+  printf("y\\x|");
+  for(int i=1;i<=yoko;i++) printf("%2d ",i-1);
+  printf("\n---+");
+  for(int i=1;i<=yoko;i++) printf("---");
+  printf("\n");
+  for(int i=1;i<=yoko;i++){
+    printf("%2d |",i-1);
+    for(int j=1;j<=tate;j++)  printf("%2c ",map[i][j].stat);
+    printf("\n");
+  }
+  printf("\n");
 }
 
 int main(){
@@ -28,7 +70,10 @@ int main(){
   setStates(&tate, &yoko, &bomb);
   printf("%d %d %d\n",tate,yoko,bomb);
 
+  map = (struct Area**)malloc(sizeof(Area*)*(yoko+2));
+
   generateMap(map,tate,yoko,bomb);
+  printf("%d\n",map[0][0].aroundBom);
   disp(map,tate,yoko);
 
   return 0;
@@ -43,7 +88,6 @@ void setStates(int *tate, int *yoko, int *bomb){
 
 void generateMap(struct Area **map, int tate, int yoko, int bomb){
   /*geneMap*/
-  map=(struct Area**)malloc(sizeof(Area*)*(yoko+2));
   for(int i=0;i<yoko+2;i++){
     map[i]=(struct Area*)malloc(sizeof(Area)*(tate+2));
     for(int j=0;j<tate+2;j++){
@@ -77,5 +121,4 @@ void generateMap(struct Area **map, int tate, int yoko, int bomb){
       }
     }
   }
-
 }

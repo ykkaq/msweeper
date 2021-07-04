@@ -9,17 +9,21 @@ void disp(int **map){
   }
 }
 
-int main(){
-  puts("Start");
-  int **map=(int **)malloc(sizeof(int *)*3);
-
-  puts("Gene");
+void gene(int **map){
   for(int i=0;i<3;i++){
     map[i]=(int *)malloc(sizeof(int)*4);
     for(int j=0;j<4;j++){
       map[i][j]=i+j;
     }
   }
+}
+
+int main(){
+  puts("Start");
+  int **map=(int **)malloc(sizeof(int *)*3);
+
+  puts("Gene");
+  gene(map);
 
   puts("Disp");
   disp(map);
